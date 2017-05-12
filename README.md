@@ -66,6 +66,23 @@
       }
       ```
 
+  - Tag
+    - Retrieve posts by tag
+      - Endpoint `GET /tags/{id}`
+      - Response
+      ```
+      {
+          data: [
+              {
+                id: <post_id|integer>,
+                title: <post_title|string>,
+                ...
+              },
+              ...
+          ]
+      }
+      ```
+
   - Video
     - Retrieve video
       - Endpoint `GET /videos/{id}`
@@ -90,6 +107,13 @@
       }
       ```
 
+
 ## TODO
   - How to sync data from [Spout360.com](https://spout360.com) to own DB?
-  - Which content style can be displayed on mobile? How to transform?
+    - [] Write [WP Hook](https://codex.wordpress.org/Plugin_API/Action_Reference)
+      - [] publish_post
+      - [] deleted_post
+      - [] (old_status)_to_(new_status)
+    - [] Write API to receive hook data from WP
+  - Which content style can be displayed on mobile? How to transform from origin to this content?
+    - Markdown???
