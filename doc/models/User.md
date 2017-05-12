@@ -15,6 +15,6 @@ social_facebook_id    | string  // maybe group these social fields to single obj
 social_twitter_id     | string
 social_gmail_id       | string
 social_steam_id       | string
-created_time          | string
-updated_time          | string
+created_time          | datetime
+updated_time          | datetime
 

@@ -3,7 +3,7 @@
 ## Endpoints
 
   - Category
-    - Retrive categories
+    - Retrieve categories
       - Endpoint `GET /categories`
       - Response
       ```
@@ -16,7 +16,7 @@
           ]
       }
       ```
-    - Retrive category details
+    - Retrieve category details
       - Endpoint `GET /categories/{id}`
       - Response
       ```
@@ -25,7 +25,7 @@
         name: <category_name|string>
       }
       ```
-    - Retrive category posts
+    - Retrieve category posts
       - Endpoint `GET /categories/{id}/posts`
       - Response
       ```
@@ -39,7 +39,7 @@
           ]
       }
       ```
-    - Retrive category videos
+    - Retrieve category videos
       - Endpoint `GET /categories/{id}/videos`
       - Response
       ```
@@ -55,7 +55,7 @@
       ```
 
   - Post
-    - Retrive post
+    - Retrieve post
       - Endpoint `GET /posts/{id}`
       - Response
       ```
@@ -67,7 +67,7 @@
       ```
 
   - Video
-    - Retrive video
+    - Retrieve video
       - Endpoint `GET /videos/{id}`
       - Response
       ```
@@ -89,3 +89,7 @@
         ...
       }
       ```
+
+## TODO
+  - How to sync data from [Spout360.com](https://spout360.com) to own DB?
+  - Which content style can be displayed on mobile? How to transform?

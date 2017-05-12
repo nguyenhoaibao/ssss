@@ -13,8 +13,8 @@ category_id           | integer
 title                 | string
 content               | string
 slug                  | string
-created_time          | string
-updated_time          | string
+created_time          | datetime
+updated_time          | datetime
 
 ## Relationships
 
