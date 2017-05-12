@@ -111,7 +111,7 @@
 ## TODO
   - How to sync data from [Spout360.com](https://spout360.com) to own DB?
     - [ ] Write [WP Hook](https://codex.wordpress.org/Plugin_API/Action_Reference)
-      - [ ] publish_post
+      - [ ] save_post
       - [ ] deleted_post
       - [ ] (old_status)_to_(new_status)
     - [ ] Write API to receive hook data from WP
