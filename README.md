@@ -1,6 +1,26 @@
 # Spout API
 
-## Endpoints
+### Prerequisite
+
+  - Nodejs >= 7.0.0
+  - Mysql >= 5.6
+
+### Setup
+
+  ```bash
+  $ cp .env.example .env
+  $ npm install
+  $ npm run db:migrate
+  $ npm start
+  ```
+
+### Swagger Documentation
+
+  1) Set `SWAGGER_DOC=enabled` in `.env`.
+  2) Run the app.
+  3) Visit `http://<host>:<port>/documentation` to see swagger API docs.
+
+### Endpoints
 
   - Category
     - Retrieve categories
@@ -108,7 +128,7 @@
       ```
 
 
-## TODO
+### TODO
   - How to sync data from [Spout360.com](https://spout360.com) to own DB?
     - [ ] Write [WP Hook](https://codex.wordpress.org/Plugin_API/Action_Reference)
       - [ ] save_post

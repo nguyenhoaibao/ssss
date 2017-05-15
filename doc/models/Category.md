@@ -10,5 +10,5 @@ Name                  | Type
 --                    | --
 id(PK)                | integer
 name                  | string
-created_time          | string
-updated_time          | string
+created_time          | datetime
+updated_time          | datetime

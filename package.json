@@ -1,0 +1,43 @@
+{
+  "name": "Spout360 API",
+  "version": "0.0.1",
+  "description": "Spout360 API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/eslint -c .eslintrc .",
+    "db:migrate": "cd scripts && /bin/bash db_migrate.sh up",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpoutEntertainment/Spout-360-API.git"
+  },
+  "author": "bao.nguyenhoai@spout360.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SpoutEntertainment/Spout-360-API/issues"
+  },
+  "homepage": "https://github.com/SpoutEntertainment/Spout-360-API#readme",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "good": "^7.1.0",
+    "good-console": "^6.4.0",
+    "good-file": "^6.0.1",
+    "good-squeeze": "^5.0.2",
+    "hapi": "^16.1.1",
+    "hapi-sequelize": "^3.0.4",
+    "hapi-swagger": "^7.7.0",
+    "inert": "^4.2.0",
+    "mysql": "^2.13.0",
+    "sequelize": "^3.30.4",
+    "vision": "^4.1.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.2.0",
+    "sequelize-cli": "^2.7.0"
+  }
+}
