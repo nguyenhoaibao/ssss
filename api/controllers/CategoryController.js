@@ -13,9 +13,11 @@ module.exports = {
     return CategoryModel.findAll()
       .then((results) => {
         const categories = results.map(category => ({
-          id: category.id,
-          name: category.name,
-          parent: category.parent
+          id: category.get('id'),
+          name: category.get('name'),
+          parent: category.get('parent'),
+          created_at: category.get('created_at'),
+          updated_at: category.get('updated_at')
         }));
 
         return reply.success({ data: categories });
@@ -44,7 +46,6 @@ module.exports = {
           id: post.get('id'),
           name: post.get('name'),
           title: post.get('title'),
-          content: post.get('content'),
           status: post.get('status'),
           type: post.get('type'),
           created_at: post.get('created_at'),

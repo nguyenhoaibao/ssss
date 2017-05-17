@@ -29,6 +29,21 @@ describe('Post Item', function () {
     server.stop(done);
   });
 
+  it('should return error notFound when post id doesn\'t exist', (done) => {
+    const notExistedPostId = 99999;
+    const options = {
+      method: 'GET',
+      url: `/posts/${notExistedPostId}`
+    };
+
+    server.inject(options, (res) => {
+      expect(res.statusCode).to.equal(404);
+      expect(res.result).to.include.keys('error');
+
+      done();
+    });
+  });
+
   it('should return post details', (done) => {
     const options = {
       method: 'GET',

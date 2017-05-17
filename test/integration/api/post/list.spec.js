@@ -56,11 +56,11 @@ describe('Post List', function () {
 
           const posts = res.result.data;
           posts.forEach((post) => {
+            console.log(post)
             expect(post).to.contain.all.keys(
               'id',
               'name',
               'title',
-              'content',
               'status',
               'type',
               'created_at',

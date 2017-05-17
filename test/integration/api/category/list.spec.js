@@ -50,7 +50,13 @@ describe('Category List', function () {
 
           const categories = res.result.data;
           categories.forEach((category) => {
-            expect(category).to.contain.all.keys(['id', 'name', 'parent']);
+            expect(category).to.contain.all.keys(
+              'id',
+              'name',
+              'parent',
+              'created_at',
+              'updated_at'
+            );
           });
 
           done();

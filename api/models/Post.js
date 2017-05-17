@@ -1,3 +1,4 @@
+const entities = require('entities');
 const utils = require('../../libs/helpers/utils');
 
 module.exports = function createPostModel(sequelize, DataTypes) {
@@ -88,7 +89,8 @@ module.exports = function createPostModel(sequelize, DataTypes) {
         withHTML(content) {
           const arrParagraphs = content
             .split(/[\r\n]/gm)
-            .filter(p => !utils.isEmptyLine(p));
+            .filter(p => !utils.isEmptyLine(p))
+            .map(p => entities.decodeHTML(p));
 
           const parapraphs = `<p>${arrParagraphs.join('</p><p>')}</p>`;
 
