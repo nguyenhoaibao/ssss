@@ -1,12 +1,13 @@
 {
-  "name": "Spout360 API",
+  "name": "Spout360-API",
   "version": "0.0.1",
   "description": "Spout360 API",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/mocha test/**/*.spec.js",
     "lint": "./node_modules/.bin/eslint -c .eslintrc .",
     "db:migrate": "cd scripts && /bin/bash db_migrate.sh up",
+    "db:migrate:downall": "cd scripts && /bin/bash db_migrate.sh downall",
     "start": "node server.js"
   },
   "repository": {
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/SpoutEntertainment/Spout-360-API#readme",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "dotenv": "^4.0.0",
     "good": "^7.1.0",
     "good-console": "^6.4.0",
@@ -29,6 +31,7 @@
     "hapi-sequelize": "^3.0.4",
     "hapi-swagger": "^7.7.0",
     "inert": "^4.2.0",
+    "joi": "^10.4.2",
     "mysql": "^2.13.0",
     "sequelize": "^3.30.4",
     "vision": "^4.1.1"
@@ -38,6 +41,8 @@
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.2.0",
+    "faker": "^4.1.0",
+    "mocha": "^3.4.1",
     "sequelize-cli": "^2.7.0"
   }
 }

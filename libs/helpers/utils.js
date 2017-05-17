@@ -30,5 +30,15 @@ module.exports = {
    */
   isSwaggerDocEnabled() {
     return this.getEnv('SWAGGER_DOC') === 'enabled';
+  },
+
+  /**
+   * Validate line is empty or not
+   *
+   * @param {String} line
+   * @return {Bool}
+   */
+  isEmptyLine(line) {
+    return /^$/.test(line);
   }
 };

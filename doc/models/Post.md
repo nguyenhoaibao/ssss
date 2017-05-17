@@ -10,9 +10,11 @@ Name                  | Type
 --                    | --
 id(PK)                | integer
 category_id           | integer
+name                  | string
 title                 | string
 content               | string
-slug                  | string
+status                | enum
+type                  | enum
 created_time          | datetime
 updated_time          | datetime
 

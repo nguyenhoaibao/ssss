@@ -4,7 +4,12 @@ const path = require('path');
 let plugins = [];
 
 fs.readdirSync(__dirname)
-  .filter(file => file.indexOf('.') !== 0 && file !== 'index.js')
+  .filter(file => (
+    file.indexOf('.') !== 0 &&
+    file !== 'index.js' &&
+    file !== 'orms' &&
+    file !== 'responses'
+  ))
   .forEach((file) => {
     const plugin = require(path.join(__dirname, file)); // eslint-disable-line
     plugins = plugins.concat(plugin);

@@ -25,23 +25,31 @@ MYSQL_PORT="${MYSQL_PORT:-3306}"
 url="mysql://${MYSQL_USERNAME}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DBNAME}"
 
 up() {
-  cd ..
-  ./node_modules/.bin/sequelize db:migrate --url $url
+    cd ..
+    ./node_modules/.bin/sequelize db:migrate --url $url
 }
 
 down() {
-  cd ..
-  ./node_modules/.bin/sequelize db:migrate:undo --url $url
+    cd ..
+    ./node_modules/.bin/sequelize db:migrate:undo --url $url
+}
+
+downall() {
+    cd ..
+    ./node_modules/.bin/sequelize db:migrate:undo:all --url $url
 }
 
 case "$1" in
-  up)
-    up
-    ;;
-  down)
-    down
-    ;;
-  *)
-    echo -e "Usage: $0 {up|down}\n"
-    exit 1
+    up)
+        up
+        ;;
+    down)
+        down
+        ;;
+    downall)
+        downall
+        ;;
+    *)
+        echo -e "Usage: $0 {up|down}\n"
+        exit 1
 esac

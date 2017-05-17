@@ -13,6 +13,11 @@ const createCategoryTable = function createCategoryTable(queryInterface, Sequeli
         allowNull: false,
         defaultValue: ''
       },
+      parent: {
+        type: Sequelize.INTEGER.UNSIGNED,
+        allowNull: false,
+        defaultValue: 0
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false
