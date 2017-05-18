@@ -8,10 +8,6 @@ const createPostTable = function createPostTable(queryInterface, Sequelize) {
         autoIncrement: true,
         primaryKey: true
       },
-      category_id: {
-        type: Sequelize.INTEGER.UNSIGNED,
-        allowNull: false
-      },
       name: {
         type: Sequelize.STRING,
         allowNull: false,

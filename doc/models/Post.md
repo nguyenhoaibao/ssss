@@ -9,7 +9,6 @@ Spout360 Post
 Name                  | Type
 --                    | --
 id(PK)                | integer
-category_id           | integer
 name                  | string
 title                 | string
 content               | string
@@ -20,7 +19,7 @@ updated_time          | datetime
 
 ## Relationships
 
-Type                  | Model             | Fields
---                    | --                | --
-belongsTo             | Category          | category_id
+Type                  | Model
+--                    | --
+belongsToMany         | Category
 belongsToMany         | Tag

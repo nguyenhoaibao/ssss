@@ -1,7 +1,7 @@
 const Hapi = require('hapi');
 const plugins = require('../../../../libs/plugins');
 
-describe('Category List', function () {
+describe('Tag List', function () {
   let server;
 
   before((done) => {
@@ -25,10 +25,10 @@ describe('Category List', function () {
     server.stop(done);
   });
 
-  it('should return empty array when category table doesn\'t have any records', (done) => {
+  it('should return empty array when tag table doesn\'t have any records', (done) => {
     const options = {
       method: 'GET',
-      url: '/categories'
+      url: '/tags'
     };
 
     server.inject(options, (res) => {
@@ -41,12 +41,12 @@ describe('Category List', function () {
     });
   });
 
-  it('should return non empty array when category table has at least 1 record',  (done) => {
-    createCategory(server)
+  it('should return non empty array when tag table has at least 1 record',  (done) => {
+    createTag(server)
       .then(() => {
         const options = {
           method: 'GET',
-          url: '/categories'
+          url: '/tags'
         };
 
         server.inject(options, (res) => {
@@ -55,12 +55,11 @@ describe('Category List', function () {
           expect(res.result.data).to.be.instanceof(Array);
           expect(res.result.data.length).to.above(0);
 
-          const categories = res.result.data;
-          categories.forEach((category) => {
-            expect(category).to.contain.all.keys(
+          const tags = res.result.data;
+          tags.forEach((tag) => {
+            expect(tag).to.contain.all.keys(
               'id',
-              'name',
-              'parent',
+              'content',
               'created_at',
               'updated_at'
             );

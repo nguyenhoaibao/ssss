@@ -1,6 +1,6 @@
-module.exports = function createCategoryModel(sequelize, DataTypes) {
-  const Category = sequelize.define(
-    'Category',
+module.exports = function createTagModel(sequelize, DataTypes) {
+  const Tag = sequelize.define(
+    'Tag',
     {
       id: {
         type: DataTypes.INTEGER.UNSIGNED,
@@ -8,19 +8,14 @@ module.exports = function createCategoryModel(sequelize, DataTypes) {
         autoIncrement: true,
         primaryKey: true
       },
-      name: {
+      content: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: ''
-      },
-      parent: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
-        defaultValue: 0
       }
     },
     {
-      tableName: 'category',
+      tableName: 'tag',
       underscored: true,
       instanceMethods: {
 
@@ -35,15 +30,15 @@ module.exports = function createCategoryModel(sequelize, DataTypes) {
       },
       classMethods: {
         associate(models) {
-          Category.belongsToMany(models.Post, {
-            through: models.CategoryPost,
-            foreignKey: 'category_id'
+          Tag.belongsToMany(models.Post, {
+            through: models.TagPost,
+            foreignKey: 'tag_id'
           });
         }
       }
     }
   );
 
-  return Category;
+  return Tag;
 };
 

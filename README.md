@@ -135,5 +135,22 @@
       - [ ] deleted_post
       - [ ] (old_status)_to_(new_status)
     - [ ] Write API to receive hook data from WP
+      - [ ] category
+        - [ ] id
+        - [ ] name
+        - [ ] parent
+      - [ ] post
+        - [ ] id
+        - [ ] title
+        - [ ] content
+        - [ ] status
+        - [ ] type
+        - [ ] media_attachments (video, image...)
+      - [ ] tag
+        - [ ] id
+        - [ ] content
+      - [ ] author
+        - [ ] id
+        - [ ] name
   - Which content style can be displayed on mobile? How to transform from origin to this content?
     - Markdown???

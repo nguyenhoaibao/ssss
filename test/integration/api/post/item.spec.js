@@ -3,29 +3,29 @@ const plugins = require('../../../../libs/plugins');
 
 describe('Post Item', function () {
   let server;
-  let createdCategory;
   let createdPost;
 
-  beforeEach((done) => {
+  before((done) => {
     server = new Hapi.Server();
     server.connection();
 
     server.register(plugins, (error) => {
-      truncate(server)
-        .then(() => createCategory(server))
-        .then((category) => {
-          createdCategory = category;
+      if (error) {
+        return done(error);
+      }
 
-          const createPostByCategory = createPost(server);
-
-          return createPostByCategory(category);
-        })
-        .then(post => createdPost = post)
-        .then(() => done());
+      return done();
     });
   });
 
-  afterEach((done) => {
+  beforeEach((done) => {
+    truncate(server)
+      .then(() => createPost(server)())
+      .then(post => createdPost = post)
+      .then(() => done());
+  });
+
+  after((done) => {
     server.stop(done);
   });
 
@@ -67,5 +67,3 @@ describe('Post Item', function () {
     });
   });
 });
-
-

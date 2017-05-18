@@ -11,10 +11,6 @@ module.exports = function createPostModel(sequelize, DataTypes) {
         autoIncrement: true,
         primaryKey: true
       },
-      category_id: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false
-      },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -62,22 +58,14 @@ module.exports = function createPostModel(sequelize, DataTypes) {
       underscored: true,
       classMethods: {
         associate(models) {
-          Post.belongsTo(models.Category);
-        },
-
-        /**
-         * Create post by category
-         *
-         * @param {Object} postData
-         * @param {Object} category
-         * @return {Promise}
-         */
-        createPostByCategory(postData, category) {
-          const post = this.build(postData);
-
-          post.setCategory(category, { save: false });
-
-          return post.save();
+          Post.belongsToMany(models.Category, {
+            through: models.CategoryPost,
+            foreignKey: 'post_id'
+          });
+          Post.belongsToMany(models.Tag, {
+            through: models.TagPost,
+            foreignKey: 'post_id'
+          });
         },
 
         /**
