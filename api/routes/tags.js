@@ -19,7 +19,7 @@ module.exports = [
     method: 'GET',
     path: '/tags',
     config: {
-      handler: TagController.all,
+      handler: TagController.list,
       description: 'List all tags',
       tags: ['api']
     }

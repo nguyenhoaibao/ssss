@@ -8,20 +8,36 @@ const createPostTable = function createPostTable(queryInterface, Sequelize) {
         autoIncrement: true,
         primaryKey: true
       },
-      name: {
+      wp_ID: {
+        type: Sequelize.INTEGER.UNSIGNED,
+        allowNull: false,
+        defaultValue: 0,
+        unique: true
+      },
+      wp_post_author: {
         type: Sequelize.STRING,
         allowNull: false,
         defaultValue: ''
       },
-      title: {
+      wp_post_date: {
         type: Sequelize.STRING,
         allowNull: false,
         defaultValue: ''
       },
-      content: {
+      wp_post_date_gmt: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ''
+      },
+      wp_post_content: {
         type: Sequelize.TEXT('long')
       },
-      status: {
+      wp_post_title: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ''
+      },
+      wp_post_status: {
         type: Sequelize.ENUM(
           'new',
           'publish',
@@ -36,7 +52,50 @@ const createPostTable = function createPostTable(queryInterface, Sequelize) {
         allowNull: false,
         defaultValue: 'new'
       },
-      type: {
+      wp_comment_status: {
+        type: Sequelize.ENUM(
+          'open',
+          'closed'
+        ),
+        allowNull: false,
+        defaultValue: 'closed'
+      },
+      wp_post_name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ''
+      },
+      wp_post_modified: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ''
+      },
+      wp_post_modified_gmt: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ''
+      },
+      wp_post_content_filtered: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ''
+      },
+      wp_post_parent: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+      },
+      wp_guid: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ''
+      },
+      wp_menu_order: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+      },
+      wp_post_type: {
         type: Sequelize.ENUM(
           'post',
           'page',
@@ -48,6 +107,16 @@ const createPostTable = function createPostTable(queryInterface, Sequelize) {
         ),
         allowNull: false,
         defaultValue: 'post'
+      },
+      wp_post_mime_type: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ''
+      },
+      wp_comment_count: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ''
       },
       created_at: {
         type: Sequelize.DATE,

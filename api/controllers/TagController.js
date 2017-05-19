@@ -1,3 +1,5 @@
+const Promise = require('bluebird');
+
 module.exports = {
 
   /**
@@ -7,7 +9,7 @@ module.exports = {
    * @param {Object} reply
    * @return {*}
    */
-  all(request, reply) {
+  list(request, reply) {
     const TagModel = request.getDb().getModel('Tag');
 
     return TagModel.findAll()
@@ -40,18 +42,26 @@ module.exports = {
     }
 
     return tag.findPosts()
-      .then((results) => {
-        const posts = results.map(post => ({
-          id: post.get('id'),
-          name: post.get('name'),
-          title: post.get('title'),
-          status: post.get('status'),
-          type: post.get('type'),
-          created_at: post.get('created_at'),
-          updated_at: post.get('updated_at')
-        }));
+      .then((posts) => {
+        if (!posts.length) {
+          return reply.success({ data: [] });
+        }
 
-        return reply.success({ data: posts });
+        const PostModel = request.getDb().getModel('Post');
+        const arrPosts = [];
+
+        return Promise.each(posts, (post) => {
+          const retrieveAttributes = PostModel.retrieveAttributes(post);
+          const retrieveAssociations = PostModel.retrieveAssociations(post);
+
+          return Promise.all([retrieveAttributes, retrieveAssociations])
+            .then((results) => {
+              const [attributes, associations] = results;
+
+              arrPosts.push(Object.assign(attributes, associations));
+            });
+        })
+        .then(() => reply.success({ data: arrPosts }));
       })
       .catch(error => reply.serverError(error));
   }

@@ -1,3 +1,5 @@
+const Promise = require('bluebird');
+
 module.exports = function createCategoryModel(sequelize, DataTypes) {
   const Category = sequelize.define(
     'Category',
@@ -8,12 +10,42 @@ module.exports = function createCategoryModel(sequelize, DataTypes) {
         autoIncrement: true,
         primaryKey: true
       },
-      name: {
+      wp_term_id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        defaultValue: 0
+      },
+      wp_name: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: ''
       },
-      parent: {
+      wp_slug: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: ''
+      },
+      wp_term_group: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        defaultValue: ''
+      },
+      wp_term_taxonomy_id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        defaultValue: 0
+      },
+      wp_taxonomy: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: ''
+      },
+      wp_parent: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        defaultValue: 0
+      },
+      wp_count: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         defaultValue: 0
@@ -39,6 +71,38 @@ module.exports = function createCategoryModel(sequelize, DataTypes) {
             through: models.CategoryPost,
             foreignKey: 'category_id'
           });
+        },
+
+        /**
+          * Save array categories.
+          * Loop for each category, check to see whether category exists or not.
+          * If category exists, update attributes.
+          * If not, create new one.
+          *
+          * @param {Array} categories
+          * @return {Promise}
+          */
+        saveCategories(categoriesData) {
+          const objCategories = [];
+
+          return Promise.each(categoriesData, (categoryData) => {
+            const cond = {
+              where: {
+                wp_term_id: categoryData.wp_term_id
+              }
+            };
+
+            return this.findOne(cond)
+              .then((category) => {
+                if (!category) {
+                  return this.create(categoryData);
+                }
+
+                return category.update(categoryData);
+              })
+              .then(category => objCategories.push(category));
+          })
+          .then(() => objCategories);
         }
       }
     }

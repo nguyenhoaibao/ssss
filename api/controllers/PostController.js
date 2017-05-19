@@ -1,4 +1,52 @@
+const Promise = require('bluebird');
+
 module.exports = {
+
+  /**
+   * Create post
+   *
+   * @param {Object} request
+   * @param {Object} reply
+   * @return {*}
+   */
+  create(request, reply) {
+    const PostModel = request.getDb().getModel('Post');
+    const UserModel = request.getDb().getModel('User');
+    const CategoryModel = request.getDb().getModel('Category');
+    const TagModel = request.getDb().getModel('Tag');
+
+    const payload = request.payload;
+
+    const {
+      post,
+      author,
+      categories,
+      tags
+    } = payload;
+
+    const savePost = PostModel.savePost(post);
+    const saveUser = UserModel.saveUser(author);
+    const saveCategories = CategoryModel.saveCategories(categories);
+    const saveTags = TagModel.saveTags(tags);
+
+    return Promise.all([savePost, saveUser, saveCategories, saveTags])
+      .then((results) => {
+        const [
+          objPost,
+          objUser,
+          objCategories,
+          objTags
+        ] = results;
+
+        const setPostUser = objPost.setUser(objUser);
+        const setPostCategories = objPost.setCategories(objCategories);
+        const setPostTags = objPost.setTags(objTags);
+
+        return Promise.all([setPostUser, setPostCategories, setPostTags]);
+      })
+      .then(() => reply.success({ status: 'success' }))
+      .catch(error => reply.serverError(error));
+  },
 
   /**
    * Get post details
@@ -17,19 +65,48 @@ module.exports = {
           return reply.notFound(new Error(`Post ${postId} does not exist`));
         }
 
-        const content = post.get('content');
-        const contentWithHTML = PostModel.withHTML(content);
+        const retrieveAttributes = PostModel.retrieveAttributesWithHTMLContent(post);
+        const retrieveAssociations = PostModel.retrieveAssociations(post);
 
-        return reply.success({
-          id: post.get('id'),
-          name: post.get('name'),
-          title: post.get('title'),
-          content: contentWithHTML,
-          status: post.get('status'),
-          type: post.get('type'),
-          created_at: post.get('created_at'),
-          updated_at: post.get('updated_at')
-        });
+        return Promise.all([retrieveAttributes, retrieveAssociations])
+          .then((results) => {
+            const [attributes, associations] = results;
+            return reply.success(Object.assign(attributes, associations));
+          });
+      })
+      .catch(error => reply.serverError(error));
+  },
+
+  /**
+   * List posts
+   *
+   * @param {Object} request
+   * @param {Object} reply
+   * @return {*}
+   */
+  list(request, reply) {
+    const PostModel = request.getDb().getModel('Post');
+
+    return PostModel.findAll()
+      .then((posts) => {
+        if (!posts.length) {
+          return reply.success({ data: [] });
+        }
+
+        const arrPosts = [];
+
+        return Promise.each(posts, (post) => {
+          const retrieveAttributes = PostModel.retrieveAttributes(post);
+          const retrieveAssociations = PostModel.retrieveAssociations(post);
+
+          return Promise.all([retrieveAttributes, retrieveAssociations])
+            .then((results) => {
+              const [attributes, associations] = results;
+
+              arrPosts.push(Object.assign(attributes, associations));
+            });
+        })
+        .then(() => reply.success({ data: arrPosts }));
       })
       .catch(error => reply.serverError(error));
   }

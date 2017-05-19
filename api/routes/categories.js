@@ -19,7 +19,7 @@ module.exports = [
     method: 'GET',
     path: '/categories',
     config: {
-      handler: CategoryController.all,
+      handler: CategoryController.list,
       description: 'List all categories',
       tags: ['api']
     }

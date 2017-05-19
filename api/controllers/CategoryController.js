@@ -1,3 +1,5 @@
+const Promise = require('bluebird');
+
 module.exports = {
 
   /**
@@ -7,15 +9,15 @@ module.exports = {
    * @param {Object} reply
    * @return {*}
    */
-  all(request, reply) {
+  list(request, reply) {
     const CategoryModel = request.getDb().getModel('Category');
 
     return CategoryModel.findAll()
       .then((results) => {
         const categories = results.map(category => ({
           id: category.get('id'),
-          name: category.get('name'),
-          parent: category.get('parent'),
+          name: category.get('wp_name'),
+          parent: category.get('wp_parent'),
           created_at: category.get('created_at'),
           updated_at: category.get('updated_at')
         }));
@@ -41,18 +43,26 @@ module.exports = {
     }
 
     return category.findPosts()
-      .then((results) => {
-        const posts = results.map(post => ({
-          id: post.get('id'),
-          name: post.get('name'),
-          title: post.get('title'),
-          status: post.get('status'),
-          type: post.get('type'),
-          created_at: post.get('created_at'),
-          updated_at: post.get('updated_at')
-        }));
+      .then((posts) => {
+        if (!posts.length) {
+          return reply.success({ data: [] });
+        }
 
-        return reply.success({ data: posts });
+        const PostModel = request.getDb().getModel('Post');
+        const arrPosts = [];
+
+        return Promise.each(posts, (post) => {
+          const retrieveAttributes = PostModel.retrieveAttributes(post);
+          const retrieveAssociations = PostModel.retrieveAssociations(post);
+
+          return Promise.all([retrieveAttributes, retrieveAssociations])
+            .then((results) => {
+              const [attributes, associations] = results;
+
+              arrPosts.push(Object.assign(attributes, associations));
+            });
+        })
+        .then(() => reply.success({ data: arrPosts }));
       })
       .catch(error => reply.serverError(error));
   }
