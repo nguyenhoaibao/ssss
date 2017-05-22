@@ -120,11 +120,100 @@ module.exports = function createPostModel(sequelize, DataTypes) {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0
+      },
+      wp_featured_image: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: ''
       }
     },
     {
       tableName: 'post',
       underscored: true,
+      instanceMethods: {
+
+        /**
+         * Retrieve post attributes
+         *
+         * @param {Object} post
+         * @return {Object}
+         */
+        retrieveAttributes() {
+          return Promise.resolve()
+            .then(() => ({
+              id: this.get('id'),
+              name: this.get('wp_post_name'),
+              title: this.get('wp_post_title'),
+              status: this.get('wp_post_status'),
+              type: this.get('wp_post_type'),
+              featured_image: this.get('wp_featured_image'),
+              created_at: this.get('wp_post_date_gmt'),
+              updated_at: this.get('wp_post_modified_gmt')
+            }));
+        },
+
+        /**
+         * Retrieve post attributes with HTML content
+         *
+         * @param {Object} post
+         * @return {Object}
+         */
+        retrieveAttributesWithHTMLContent() {
+          return this.retrieveAttributes()
+            .then((postAttributes) => {
+              const content = this.get('wp_post_content');
+              const HTMLContent = Post.withHTML(content);
+
+              return Object.assign(postAttributes, { content: HTMLContent });
+            });
+        },
+
+        /**
+         * Retrieve post associations
+         *
+         * @param {Object} post
+         * @return {Object}
+         */
+        retrieveAssociations() {
+          const getUser = this.getUser();
+          const getCategories = this.getCategories();
+          const getTags = this.getTags();
+
+          const associations = {};
+
+          return Promise.all([getUser, getCategories, getTags])
+            .then((results) => {
+              const [user, categories, tags] = results;
+
+              if (user) {
+                associations.user = {
+                  id: user.get('id'),
+                  name: user.get('wp_user_nicename')
+                };
+              }
+
+              if (categories.length) {
+                associations.categories = [];
+
+                categories.forEach(category => associations.categories.push({
+                  id: category.get('id'),
+                  name: category.get('wp_name')
+                }));
+              }
+
+              if (tags.length) {
+                associations.tags = [];
+
+                tags.forEach(tag => associations.tags.push({
+                  id: tag.get('id'),
+                  name: tag.get('wp_name')
+                }));
+              }
+
+              return associations;
+            });
+        }
+      },
       classMethods: {
         associate(models) {
           Post.belongsToMany(models.Category, {
@@ -181,87 +270,6 @@ module.exports = function createPostModel(sequelize, DataTypes) {
               return post.update(postData);
             })
             .catch(error => Promise.reject(error));
-        },
-
-        /**
-         * Retrieve post attributes
-         *
-         * @param {Object} post
-         * @return {Object}
-         */
-        retrieveAttributes(post) {
-          return Promise.resolve()
-            .then(() => ({
-              id: post.get('id'),
-              name: post.get('wp_post_name'),
-              title: post.get('wp_post_title'),
-              status: post.get('wp_post_status'),
-              type: post.get('wp_post_type'),
-              created_at: post.get('wp_post_date_gmt'),
-              updated_at: post.get('wp_post_modified_gmt')
-            }));
-        },
-
-        /**
-         * Retrieve post attributes with HTML content
-         *
-         * @param {Object} post
-         * @return {Object}
-         */
-        retrieveAttributesWithHTMLContent(post) {
-          return this.retrieveAttributes(post)
-            .then((postAttributes) => {
-              const content = post.get('wp_post_content');
-              const HTMLContent = this.withHTML(content);
-
-              return Object.assign(postAttributes, { content: HTMLContent });
-            });
-        },
-
-        /**
-         * Retrieve post associations
-         *
-         * @param {Object} post
-         * @return {Object}
-         */
-        retrieveAssociations(post) {
-          const getUser = post.getUser();
-          const getCategories = post.getCategories();
-          const getTags = post.getTags();
-
-          const associations = {};
-
-          return Promise.all([getUser, getCategories, getTags])
-            .then((results) => {
-              const [user, categories, tags] = results;
-
-              if (user) {
-                associations.user = {
-                  id: user.get('id'),
-                  name: user.get('wp_user_nicename')
-                };
-              }
-
-              if (categories.length) {
-                associations.categories = [];
-
-                categories.forEach(category => associations.categories.push({
-                  id: category.get('id'),
-                  name: category.get('wp_name')
-                }));
-              }
-
-              if (tags.length) {
-                associations.tags = [];
-
-                tags.forEach(tag => associations.tags.push({
-                  id: tag.get('id'),
-                  name: tag.get('wp_name')
-                }));
-              }
-
-              return associations;
-            });
         }
       }
     }

@@ -67,6 +67,10 @@ global.genTagData = function genTagData() {
   }];
 };
 
+global.genFeaturedImage = function genFeaturedImage() {
+  return faker.image.imageUrl();
+};
+
 global.createCategory = function createCategory(server, dbname = MYSQL_DBNAME) {
   const db = getDB(server, dbname);
   const CategoryModel = db.getModel('Category');

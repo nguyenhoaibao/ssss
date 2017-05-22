@@ -21,10 +21,13 @@ module.exports = {
       post,
       author,
       categories,
-      tags
+      tags,
+      featured_image: featuredImage
     } = payload;
 
-    const savePost = PostModel.savePost(post);
+    const postWithFeaturedImage = Object.assign(post, { wp_featured_image: featuredImage });
+
+    const savePost = PostModel.savePost(postWithFeaturedImage);
     const saveUser = UserModel.saveUser(author);
     const saveCategories = CategoryModel.saveCategories(categories);
     const saveTags = TagModel.saveTags(tags);
@@ -65,8 +68,8 @@ module.exports = {
           return reply.notFound(new Error(`Post ${postId} does not exist`));
         }
 
-        const retrieveAttributes = PostModel.retrieveAttributesWithHTMLContent(post);
-        const retrieveAssociations = PostModel.retrieveAssociations(post);
+        const retrieveAttributes = post.retrieveAttributesWithHTMLContent();
+        const retrieveAssociations = post.retrieveAssociations();
 
         return Promise.all([retrieveAttributes, retrieveAssociations])
           .then((results) => {
@@ -96,8 +99,8 @@ module.exports = {
         const arrPosts = [];
 
         return Promise.each(posts, (post) => {
-          const retrieveAttributes = PostModel.retrieveAttributes(post);
-          const retrieveAssociations = PostModel.retrieveAssociations(post);
+          const retrieveAttributes = post.retrieveAttributes();
+          const retrieveAssociations = post.retrieveAssociations();
 
           return Promise.all([retrieveAttributes, retrieveAssociations])
             .then((results) => {

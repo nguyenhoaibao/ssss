@@ -27,6 +27,7 @@ describe('Post Create', function () {
 
   it('should create new post success', (done) => {
     const post = genPostData();
+    const featuredImage = genFeaturedImage();
     const author = genAuthorData(post);
     const categories = genCategoryData();
     const tags = genTagData();
@@ -38,7 +39,8 @@ describe('Post Create', function () {
         post,
         author,
         categories,
-        tags
+        tags,
+        featured_image: featuredImage
       }
     };
 

@@ -59,6 +59,7 @@ describe('Post Item', function () {
         'content',
         'status',
         'type',
+        'featured_image',
         'created_at',
         'updated_at'
       );

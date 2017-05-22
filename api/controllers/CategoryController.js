@@ -48,12 +48,11 @@ module.exports = {
           return reply.success({ data: [] });
         }
 
-        const PostModel = request.getDb().getModel('Post');
         const arrPosts = [];
 
         return Promise.each(posts, (post) => {
-          const retrieveAttributes = PostModel.retrieveAttributes(post);
-          const retrieveAssociations = PostModel.retrieveAssociations(post);
+          const retrieveAttributes = post.retrieveAttributes();
+          const retrieveAssociations = post.retrieveAssociations();
 
           return Promise.all([retrieveAttributes, retrieveAssociations])
             .then((results) => {

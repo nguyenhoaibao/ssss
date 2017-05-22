@@ -58,7 +58,8 @@ module.exports = {
           wp_taxonomy: Joi.string().required(),
           wp_parent: Joi.number().integer().required(),
           wp_count: Joi.number().integer().required()
-        })).required()
+        })).required(),
+        featured_image: Joi.string().required()
       });
   }
 };

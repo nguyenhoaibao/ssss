@@ -87,6 +87,7 @@ describe('Post List', function () {
               'title',
               'status',
               'type',
+              'featured_image',
               'created_at',
               'updated_at'
             );
@@ -152,6 +153,7 @@ describe('Post List', function () {
               'title',
               'status',
               'type',
+              'featured_image',
               'created_at',
               'updated_at'
             );

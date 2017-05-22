@@ -118,6 +118,11 @@ const createPostTable = function createPostTable(queryInterface, Sequelize) {
         allowNull: false,
         defaultValue: ''
       },
+      wp_featured_image: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ''
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false
