@@ -42,7 +42,9 @@ module.exports = {
       return reply.notFound(new Error(`Category ${categoryId} does not exist`));
     }
 
-    return category.findPosts()
+    const { limit, page } = request.query;
+
+    return category.findPosts({ limit, page })
       .then((posts) => {
         if (!posts.length) {
           return reply.success({ data: [] });

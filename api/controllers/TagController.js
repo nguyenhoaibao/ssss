@@ -41,7 +41,9 @@ module.exports = {
       return reply.notFound(new Error(`Tag ${tagId} does not exist`));
     }
 
-    return tag.findPosts()
+    const { limit, page } = request.query;
+
+    return tag.findPosts({ limit, page })
       .then((posts) => {
         if (!posts.length) {
           return reply.success({ data: [] });

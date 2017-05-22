@@ -61,8 +61,10 @@ module.exports = function createCategoryModel(sequelize, DataTypes) {
          *
          * @return {Promise}
          */
-        findPosts() {
-          return this.getPosts();
+        findPosts({ limit = 10, page = 1 } = {}) {
+          const offset = (page - 1) * limit;
+
+          return this.getPosts({ limit, offset });
         }
       },
       classMethods: {

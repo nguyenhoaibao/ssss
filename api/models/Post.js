@@ -270,6 +270,54 @@ module.exports = function createPostModel(sequelize, DataTypes) {
               return post.update(postData);
             })
             .catch(error => Promise.reject(error));
+        },
+
+        /**
+         * Find posts
+         *
+         * @param {Int} category
+         * @param {Int} tag
+         * @param {Int} limit
+         * @param {Int} page
+         * @return {Promise}
+         */
+        findPosts({ category, tag, limit, page } = {}) {
+          const offset = (page - 1) * limit;
+          const condition = {
+            limit,
+            offset
+          };
+          const include = [];
+
+          if (category) {
+            include.push({
+              model: sequelize.models.Category,
+              through: {
+                where: { category_id: category }
+              },
+              // set required: true force sequelize use INNER JOIN instead of LEFT JOIN
+              // @SEE: https://github.com/sequelize/sequelize/issues/3936#issuecomment-112082519
+              required: true
+            });
+          }
+
+          if (tag) {
+            include.push({
+              model: sequelize.models.Tag,
+              through: {
+                where: { tag_id: tag }
+              },
+              // set required: true force sequelize use INNER JOIN instead of LEFT JOIN
+              // @SEE: https://github.com/sequelize/sequelize/issues/3936#issuecomment-112082519
+              required: true
+            });
+          }
+
+          if (include.length) {
+            condition.include = include;
+          }
+
+          return this.findAll(condition);
         }
       }
     }

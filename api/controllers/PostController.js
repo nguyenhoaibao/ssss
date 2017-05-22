@@ -89,8 +89,16 @@ module.exports = {
    */
   list(request, reply) {
     const PostModel = request.getDb().getModel('Post');
+    const query = request.query;
 
-    return PostModel.findAll()
+    const {
+      category,
+      tag,
+      limit,
+      page
+    } = query;
+
+    return PostModel.findPosts({ category, tag, limit, page })
       .then((posts) => {
         if (!posts.length) {
           return reply.success({ data: [] });

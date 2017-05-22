@@ -32,8 +32,65 @@ describe('Post List', function () {
     server.stop(done);
   });
 
+  it('should return posts array when post table has at least 1 record', (done) => {
+    createPost(server)()
+      .then(() => {
+        const options = {
+          method: 'GET',
+          url: `/posts`
+        };
+
+        server.inject(options, (res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.result.data).to.instanceof(Array);
+          expect(res.result.data.length).to.above(0);
+
+          done();
+        });
+      });
+  });
+
+  it('should return empty array when post exists but doesn\'t belongs to filtered category', (done) => {
+    const anyCategory = 99999;
+
+    createPost(server)()
+      .then(() => {
+        const options = {
+          method: 'GET',
+          url: `/posts?category=${anyCategory}`
+        };
+
+        server.inject(options, (res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.result.data).to.instanceof(Array);
+          expect(res.result.data.length).to.equal(0);
+
+          done();
+        });
+      });
+  });
+
+  it('should return posts array when post exists and belongs to filtered category', (done) => {
+    createPost(server)({ category: createdCategory })
+      .then(() => {
+        const options = {
+          method: 'GET',
+          url: `/posts?category=${createdCategory.id}`
+        };
+
+        server.inject(options, (res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.result.data).to.instanceof(Array);
+          expect(res.result.data.length).to.above(0);
+
+          done();
+        });
+      });
+  });
+
   it('should return error notFound when category id doesn\'t exist', (done) => {
     const notExistedCategoryId = 999999;
+
     const options = {
       method: 'GET',
       url: `/categories/${notExistedCategoryId}/posts`
@@ -64,9 +121,7 @@ describe('Post List', function () {
   });
 
   it('should return posts array when category has at least 1 post', (done) => {
-    const createPostByCategory = createPost(server);
-
-    createPostByCategory({ category: createdCategory })
+    createPost(server)({ category: createdCategory })
       .then(() => {
         const options = {
           method: 'GET',
@@ -130,9 +185,7 @@ describe('Post List', function () {
   });
 
   it('should return posts array when tag has at least 1 post', (done) => {
-    const createPostByTag = createPost(server);
-
-    createPostByTag({ tag: createdTag })
+    createPost(server)({ tag: createdTag })
       .then(() => {
         const options = {
           method: 'GET',

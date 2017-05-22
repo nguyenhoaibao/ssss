@@ -34,6 +34,19 @@ module.exports = [
       validate: {
         params: {
           id: Joi.number().integer().positive()
+        },
+        query: {
+          limit: Joi
+            .number()
+            .integer()
+            .min(1)
+            .max(20)
+            .default(10),
+          page: Joi
+            .number()
+            .integer()
+            .min(1)
+            .default(1)
         }
       },
       pre: [{

@@ -21,7 +21,10 @@ module.exports = [
     config: {
       handler: PostController.list,
       description: 'List posts',
-      tags: ['api']
+      tags: ['api'],
+      validate: {
+        query: postValidator.querySchema()
+      }
     }
   },
   {

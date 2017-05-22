@@ -61,5 +61,41 @@ module.exports = {
         })).required(),
         featured_image: Joi.string().required()
       });
+  },
+
+  querySchema() {
+    return Joi
+      .object()
+      .options({
+        language: {
+          messages: {
+            wrapArrays: false
+          },
+          object: {
+            child: '!!{{reason}}'
+          }
+        }
+      })
+      .keys({
+        category: Joi
+          .number()
+          .integer()
+          .positive(),
+        tag: Joi
+          .number()
+          .integer()
+          .positive(),
+        limit: Joi
+          .number()
+          .integer()
+          .min(1)
+          .max(20)
+          .default(10),
+        page: Joi
+          .number()
+          .integer()
+          .min(1)
+          .default(1)
+      });
   }
 };
