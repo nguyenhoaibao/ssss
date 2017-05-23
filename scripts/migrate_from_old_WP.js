@@ -49,6 +49,9 @@ const apiConnStr = `mysql://${API_USERNAME}:${API_PASSWORD}@${API_HOST}:${API_PO
 const apiSequelize = new Sequelize(apiConnStr);
 
 function initModels(s) {
+  // import function provided by sequelize instance.
+  // Use this function to import model (instead of require-ing directly)
+  // to use sequelize associations between models.
   const i = s.import.bind(s);
   const Post = i('../api/models/Post');
   const User = i('../api/models/User');
