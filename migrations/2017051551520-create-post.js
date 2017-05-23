@@ -11,8 +11,7 @@ const createPostTable = function createPostTable(queryInterface, Sequelize) {
       wp_ID: {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
-        defaultValue: 0,
-        unique: true
+        defaultValue: 0
       },
       wp_post_author: {
         type: Sequelize.STRING,
@@ -140,9 +139,21 @@ const createPostTable = function createPostTable(queryInterface, Sequelize) {
   );
 };
 
+const createUniqueIndex = function createUniqueIndex(queryInterface, indexName, ...field) {
+  return queryInterface.addIndex(
+    'post',
+    field,
+    {
+      indexName,
+      indicesType: 'UNIQUE'
+    }
+  );
+};
+
 module.exports = {
   up(queryInterface, Sequelize) {
     return createPostTable(queryInterface, Sequelize)
+      .then(() => createUniqueIndex(queryInterface, 'idx_wp_id', 'wp_ID'))
       .catch(error => console.log(error));
   },
 

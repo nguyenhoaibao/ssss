@@ -16,7 +16,7 @@ module.exports = {
       .then((results) => {
         const tags = results.map(tag => ({
           id: tag.get('id'),
-          content: tag.get('conten'),
+          name: tag.get('wp_name'),
           created_at: tag.get('created_at'),
           updated_at: tag.get('updated_at')
         }));

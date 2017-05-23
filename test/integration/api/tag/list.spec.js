@@ -59,7 +59,7 @@ describe('Tag List', function () {
           tags.forEach((tag) => {
             expect(tag).to.contain.all.keys(
               'id',
-              'content',
+              'name',
               'created_at',
               'updated_at'
             );
