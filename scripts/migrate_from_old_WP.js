@@ -217,7 +217,7 @@ const Sync = function Sync(options) {
      *
      * @return {Object}
      */
-    retrieveUsers() {
+    retrieveWPUsers() {
       const queryStr = 'SELECT * FROM wp_users';
 
       return wpS.query(queryStr, { type: wpS.QueryTypes.SELECT })
@@ -413,7 +413,7 @@ const Sync = function Sync(options) {
       let insertedCategories;
       let insertedTags;
 
-      return this.retrieveUsers()
+      return this.retrieveWPUsers()
         .then(users => this.insertUsersToAPIDB(users))
         .then(() => this.retrieveWPPostsWithFeaturedImage())
         .then((wpIDMapPostData) => {
