@@ -65,9 +65,21 @@ const createCategoryTable = function createCategoryTable(queryInterface, Sequeli
   );
 };
 
+const createUniqueIndex = function createUniqueIndex(queryInterface, indexName, ...field) {
+  return queryInterface.addIndex(
+    'category',
+    field,
+    {
+      indexName,
+      indicesType: 'UNIQUE'
+    }
+  );
+};
+
 module.exports = {
   up(queryInterface, Sequelize) {
     return createCategoryTable(queryInterface, Sequelize)
+      .then(() => createUniqueIndex(queryInterface, 'idx_wp_term_id', 'wp_term_id'))
       .catch(error => console.log(error));
   },
 

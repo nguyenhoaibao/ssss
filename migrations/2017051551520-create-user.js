@@ -35,9 +35,21 @@ const createUserTable = function createUserTable(queryInterface, Sequelize) {
   );
 };
 
+const createUniqueIndex = function createUniqueIndex(queryInterface, indexName, ...field) {
+  return queryInterface.addIndex(
+    'user',
+    field,
+    {
+      indexName,
+      indicesType: 'UNIQUE'
+    }
+  );
+};
+
 module.exports = {
   up(queryInterface, Sequelize) {
     return createUserTable(queryInterface, Sequelize)
+      .then(() => createUniqueIndex(queryInterface, 'idx_wp_post_author', 'wp_post_author'))
       .catch(error => console.log(error));
   },
 
