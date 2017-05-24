@@ -7,7 +7,7 @@ machine:
     MYSQL_PORT: 3306
     MYSQL_USERNAME: ubuntu
     MYSQL_PASSWORD:
-    MYSQL_DBNAME: spout360_api
+    MYSQL_DBNAME: circle_test
     MYSQL_ENGINE: InnoDB
     MYSQL_CHARSET: utf8mb4
     MYSQL_COLLATE: utf8mb4_unicode_ci
