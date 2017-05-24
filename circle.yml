@@ -5,7 +5,7 @@ machine:
     APP_PORT: 3000
     MYSQL_HOST: 127.0.0.1
     MYSQL_PORT: 3306
-    MYSQL_USERNAME: spout360_api
+    MYSQL_USERNAME: ubuntu
     MYSQL_PASSWORD:
     MYSQL_DBNAME: spout360_api
     MYSQL_ENGINE: InnoDB
@@ -18,7 +18,7 @@ machine:
     - nvm install 7 && nvm use 7 && nvm alias default 7
 database:
   override:
-    - mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DBNAME CHARACTER SET $MYSQL_CHARSET COLLATE $MYSQL_COLLATE;"
+    - mysql -u $MYSQL_USERNAME -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DBNAME CHARACTER SET $MYSQL_CHARSET COLLATE $MYSQL_COLLATE;"
     - npm run db:migrate
 test:
   override:
