@@ -24,3 +24,11 @@ test:
   override:
     - npm run lint
     - npm run test
+deployment:
+  staging:
+    branch: develop
+    codedeploy:
+      spout360-api:
+        application_root: /
+        region: ap-southeast-1
+        deployment_group: api

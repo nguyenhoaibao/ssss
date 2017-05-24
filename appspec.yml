@@ -1,0 +1,18 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ec2-user/spout360-api-test
+hooks:
+  BeforeInstall:
+    - location: scripts/deploy_hooks/before_install.sh
+      runas: ec2-user
+  AfterInstall:
+    - location: scripts/deploy_hooks/after_install.sh
+      runas: ec2-user
+  ApplicationStart:
+    - location: scripts/deploy_hooks/application_start.sh
+      runas: ec2-user
+  ValidateService:
+    - location: scripts/deploy_hooks/validate_service.sh
+      runas: ec2-user
