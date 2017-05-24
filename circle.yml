@@ -1,15 +1,30 @@
 machine:
+  environment:
+    NODE_ENV=test
+    APP_NAME=Spout360 API TEST
+    APP_PORT=$APP_NAME_TEST
+    MYSQL_HOST=$MYSQL_HOST_TEST
+    MYSQL_PORT=$MYSQL_PORT_TEST
+    MYSQL_USERNAME=$MYSQL_USERNAME_TEST
+    MYSQL_PASSWORD=$MYSQL_PASSWORD_TEST
+    MYSQL_DBNAME=$MYSQL_DBNAME_TEST
+    MYSQL_ENGINE=$MYSQL_ENGINE
+    MYSQL_CHARSET=$MYSQL_CHARSET
+    MYSQL_COLLATE=$MYSQL_COLLATE
+    SWAGGER_DOC=$SWAGGER_DOC_TEST
+    LOG_STDOUT=$LOG_STDOUT_TEST
+    LOG_FILE=$LOG_FILE_TEST
   post:
     - nvm install 7 && nvm use 7 && nvm alias default 7
-    - /bin/bash scripts/build_env_vars.sh
 database:
   override:
-    - mysql -u $MYSQL_USERNAME -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DBNAME CHARACTER SET $MYSQL_CHARSET COLLATE $MYSQL_COLLATE;"
     - npm run db:migrate
 test:
   override:
     - npm run lint
     - npm run test
+  post:
+    - /bin/bash scripts/build_env_vars.sh
 deployment:
   staging:
     branch: develop
