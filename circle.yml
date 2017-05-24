@@ -28,7 +28,7 @@ deployment:
   staging:
     branch: develop
     codedeploy:
-      spout360-api:
+      spout-deployment:
         application_root: /
         region: ap-southeast-1
         deployment_group: api
