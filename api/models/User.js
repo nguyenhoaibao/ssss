@@ -13,7 +13,7 @@ module.exports = function createUserModel(sequelize, DataTypes) {
         allowNull: false,
         defaultValue: ''
       },
-      wp_user_nicename: {
+      wp_display_name: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: ''

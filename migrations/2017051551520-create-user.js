@@ -13,7 +13,7 @@ const createUserTable = function createUserTable(queryInterface, Sequelize) {
         allowNull: false,
         defaultValue: ''
       },
-      wp_user_nicename: {
+      wp_display_name: {
         type: Sequelize.STRING,
         allowNull: false,
         defaultValue: ''

@@ -37,7 +37,7 @@ module.exports = {
         }).required(),
         author: Joi.object().keys({
           wp_post_author: Joi.string().required(),
-          wp_user_nicename: Joi.string().required()
+          wp_display_name: Joi.string().required()
         }).required(),
         categories: Joi.array().items(Joi.object().keys({
           wp_term_id: Joi.number().integer(),

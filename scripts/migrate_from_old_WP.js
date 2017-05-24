@@ -82,12 +82,12 @@ const Sync = function Sync(options) {
 
   return {
     /**
-     * Retrieve WP posts with post_type = "post"
+     * Retrieve WP posts with post_type = "post" and post_status = "publish"
      *
      * @return {Object}
      */
     retrieveWPPosts() {
-      const queryStr = 'SELECT * FROM wp_posts WHERE post_type = "post"';
+      const queryStr = 'SELECT * FROM wp_posts WHERE post_type = "post" AND post_status = "publish"';
 
       return wpS.query(queryStr, { type: wpS.QueryTypes.SELECT })
         .then((posts) => {
@@ -231,7 +231,7 @@ const Sync = function Sync(options) {
 
           return users.map(user => ({
             wp_post_author: user.ID,
-            wp_user_nicename: user.user_nicename
+            wp_display_name: user.display_name
           }));
         })
         .catch(error => Promise.reject(error));
@@ -248,7 +248,7 @@ const Sync = function Sync(options) {
         individualHooks: true,
         updateOnDuplicate: [
           'wp_post_author',
-          'wp_user_nicename'
+          'wp_display_name'
         ]
       };
 

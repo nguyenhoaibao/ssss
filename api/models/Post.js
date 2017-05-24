@@ -188,7 +188,7 @@ module.exports = function createPostModel(sequelize, DataTypes) {
               if (user) {
                 associations.user = {
                   id: user.get('id'),
-                  name: user.get('wp_user_nicename')
+                  name: user.get('wp_display_name')
                 };
               }
 

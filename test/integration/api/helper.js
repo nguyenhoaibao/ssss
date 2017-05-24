@@ -37,7 +37,7 @@ global.genPostData = function genPostData() {
 global.genAuthorData = function genAuthorData(post) {
   return {
     wp_post_author: post.wp_post_author,
-    wp_user_nicename: faker.internet.userName()
+    wp_display_name: faker.internet.userName()
   };
 };
 
