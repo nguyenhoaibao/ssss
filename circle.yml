@@ -1,7 +1,7 @@
 machine:
   post:
     - nvm install 7 && nvm use 7 && nvm alias default 7
-    - ./scripts/build_env_vars.sh
+    - /bin/bash scripts/build_env_vars.sh
 database:
   override:
     - mysql -u $MYSQL_USERNAME -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DBNAME CHARACTER SET $MYSQL_CHARSET COLLATE $MYSQL_COLLATE;"
