@@ -24,7 +24,7 @@ test:
     - npm run lint
     - npm run test
   post:
-    - /bin/bash scripts/build_env_vars.sh
+    - /bin/bash ./scripts/build_env_vars.sh
 deployment:
   staging:
     branch: develop
