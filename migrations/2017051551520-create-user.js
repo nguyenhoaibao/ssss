@@ -9,7 +9,8 @@ const createUserTable = function createUserTable(queryInterface, Sequelize) {
         primaryKey: true
       },
       wp_post_author: {
-        type: Sequelize.STRING,
+        // SEE: https://stackoverflow.com/questions/1814532/1071-specified-key-was-too-long-max-key-length-is-767-bytes
+        type: Sequelize.STRING(191),
         allowNull: false,
         defaultValue: ''
       },

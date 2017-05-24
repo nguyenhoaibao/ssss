@@ -6,5 +6,4 @@ codedir="/home/ec2-user/Spout/api"
 npm=$(which npm)
 
 cd $codedir
-$npm install
-$npm run db:migrate
+$npm install && $npm run db:migrate
