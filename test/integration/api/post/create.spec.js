@@ -1,4 +1,4 @@
-const Hapi = require('Hapi');
+const Hapi = require('hapi');
 const plugins = require('../../../../libs/plugins');
 
 describe('Post Create', function () {
