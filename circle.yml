@@ -20,7 +20,3 @@ database:
   override:
     - mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DBNAME CHARACTER SET $MYSQL_CHARSET COLLATE $MYSQL_COLLATE;"
     - npm run db:migrate
-test:
-  override:
-    - npm run lint
-    - npm run test
