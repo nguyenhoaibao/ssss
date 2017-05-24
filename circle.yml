@@ -1,23 +1,21 @@
 machine:
-  node:
-    version: 7
-  services:
-    - mysql
   environment:
-    - NODE_ENV=test
-    - APP_NAME=spout360_api
-    - APP_PORT=3000
-    - MYSQL_HOST=127.0.0.1
-    - MYSQL_PORT=3306
-    - MYSQL_USERNAME=spout360_api
-    - MYSQL_PASSWORD=
-    - MYSQL_DBNAME=spout360_api
-    - MYSQL_ENGINE=InnoDB
-    - MYSQL_CHARSET=utf8mb4
-    - MYSQL_COLLATE=utf8mb4_unicode_ci
-    - SWAGGER_DOC=disabled
-    - LOG_STDOUT=disabled
-    - LOG_FILE=disabled
+    NODE_ENV=test
+    APP_NAME=spout360_api
+    APP_PORT=3000
+    MYSQL_HOST=127.0.0.1
+    MYSQL_PORT=3306
+    MYSQL_USERNAME=spout360_api
+    MYSQL_PASSWORD=
+    MYSQL_DBNAME=spout360_api
+    MYSQL_ENGINE=InnoDB
+    MYSQL_CHARSET=utf8mb4
+    MYSQL_COLLATE=utf8mb4_unicode_ci
+    SWAGGER_DOC=disabled
+    LOG_STDOUT=disabled
+    LOG_FILE=disabled
+  post:
+    - nvm use 7 && nvm alias default 7
 database:
   override:
     - mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DBNAME CHARACTER SET $MYSQL_CHARSET COLLATE $MYSQL_COLLATE;"
