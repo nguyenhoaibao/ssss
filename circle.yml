@@ -14,14 +14,3 @@ machine:
     SWAGGER_DOC=disabled
     LOG_STDOUT=disabled
     LOG_FILE=disabled
-dependencies:
-  override:
-    - nvm install 7 && npm install
-database:
-  override:
-    - mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DBNAME CHARACTER SET $MYSQL_CHARSET COLLATE $MYSQL_COLLATE;"
-    - npm run db:migrate
-test:
-  override:
-    - nvm use 7 && npm run lint
-    - nvm use 7 && npm run test
