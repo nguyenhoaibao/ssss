@@ -30,5 +30,11 @@ deployment:
     codedeploy:
       spout-deployment:
         application_root: /
+        revision_location:
+          revision_type: S3
+          s3_location:
+            bucket: spout-api-staging-bucket
+            key_pattern: apps/spout-api-{SHORT_COMMIT}-{BUILD_NUM}
         region: ap-southeast-1
         deployment_group: api
+        deployment_config: CodeDeployDefault.AllAtOnce
