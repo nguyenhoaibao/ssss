@@ -2,9 +2,9 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ec2-user/spout360-api-test/
+    destination: /home/ec2-user/Spout/api
 permissions:
-  - object: /home/ec2-user/spout360-api-test
+  - object: /home/ec2-user/Spout
     owner: ec2-user
     group: ec2-user
     type:
