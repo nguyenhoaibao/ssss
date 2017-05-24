@@ -15,7 +15,7 @@ machine:
     LOG_STDOUT=disabled
     LOG_FILE=disabled
   post:
-    - nvm use 7 && nvm alias default 7
+    - nvm install 7 && nvm use 7 && nvm alias default 7
 database:
   override:
     - mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DBNAME CHARACTER SET $MYSQL_CHARSET COLLATE $MYSQL_COLLATE;"
