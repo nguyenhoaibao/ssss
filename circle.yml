@@ -1,19 +1,19 @@
 machine:
   environment:
-    NODE_ENV=test
-    APP_NAME=Spout360 API TEST
-    APP_PORT=3000
-    MYSQL_HOST=127.0.0.1
-    MYSQL_PORT=3306
-    MYSQL_USERNAME=ubuntu
-    MYSQL_PASSWORD=
-    MYSQL_DBNAME=circle_test
-    MYSQL_ENGINE=InnoDB
-    MYSQL_CHARSET=utf8mb4
-    MYSQL_COLLATE=utf8mb4_unicode_ci
-    SWAGGER_DOC=disabled
-    LOG_STDOUT=disabled
-    LOG_FILE=disabled
+    NODE_ENV: test
+    APP_NAME: spout360_api
+    APP_PORT: 3000
+    MYSQL_HOST: 127.0.0.1
+    MYSQL_PORT: 3306
+    MYSQL_USERNAME: ubuntu
+    MYSQL_PASSWORD:
+    MYSQL_DBNAME: spout360_api
+    MYSQL_ENGINE: InnoDB
+    MYSQL_CHARSET: utf8mb4
+    MYSQL_COLLATE: utf8mb4_unicode_ci
+    SWAGGER_DOC: disabled
+    LOG_STDOUT: disabled
+    LOG_FILE: disabled
   post:
     - nvm install 7 && nvm use 7 && nvm alias default 7
 database:
